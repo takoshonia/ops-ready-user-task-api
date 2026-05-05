@@ -76,44 +76,44 @@ H2 login values:
 ### User endpoints
 
 Invalid user create request (validation error):
-![img_1.png](img_1.png)
+![img_1.png](screenshots/img_1.png)
 
 Valid user create request:
-![img_2.png](img_2.png)
+![img_2.png](screenshots/img_2.png)
 
 Get user by ID:
-![img_3.png](img_3.png)
+![img_3.png](screenshots/img_3.png)
 
 Get all users:
-![img_5.png](img_5.png)
+![img_5.png](screenshots/img_5.png)
 
 Update user:
-![img_4.png](img_4.png)
+![img_4.png](screenshots/img_4.png)
 
 Delete user:
-![img_6.png](img_6.png)
+![img_6.png](screenshots/img_6.png)
 
 ### Task endpoints
 
 Create task:
-![img_7.png](img_7.png)
+![img_7.png](screenshots/img_7.png)
 
 Get all tasks:
-![img_8.png](img_8.png)
+![img_8.png](screenshots/img_8.png)
 
 Update task:
-![img_9.png](img_9.png)
+![img_9.png](screenshots/img_9.png)
 
 Get task by ID:
-![img_10.png](img_10.png)
+![img_10.png](screenshots/img_10.png)
 
 Delete task:
-![img_11.png](img_11.png)
+![img_11.png](screenshots/img_11.png)
 
 ### Database (H2)
 
 Users table in H2 console:
-![img_12.png](img_12.png)
+![img_12.png](screenshots/img_12.png)
 
 Tasks table in H2 console:
-![img_13.png](img_13.png)
+![img_13.png](screenshots/img_13.png)
