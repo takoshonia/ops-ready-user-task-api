@@ -1,8 +1,12 @@
 package com.tamar.user_task_api.dto.response;
 
+import java.time.LocalDateTime;
+
 public record UserResponse(
         Long id,
         String name,
-        String email
+        String email,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {
 }

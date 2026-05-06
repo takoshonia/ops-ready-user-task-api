@@ -2,6 +2,7 @@ package com.tamar.user_task_api.controller;
 
 import com.tamar.user_task_api.dto.request.TaskCreateRequest;
 import com.tamar.user_task_api.dto.response.TaskResponse;
+import com.tamar.user_task_api.service.IdempotencyService;
 import com.tamar.user_task_api.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,11 +27,20 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final IdempotencyService idempotencyService;
 
     @Operation(summary = "Create task")
     @PostMapping
-    public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskCreateRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(request));
+    public ResponseEntity<TaskResponse> create(
+            @Valid @RequestBody TaskCreateRequest request,
+            @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey
+    ) {
+        return idempotencyService.execute(
+                "tasks:create",
+                idempotencyKey,
+                request,
+                () -> ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(request))
+        );
     }
 
     @Operation(summary = "Get all tasks")
@@ -46,8 +57,17 @@ public class TaskController {
 
     @Operation(summary = "Update task")
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponse> update(@PathVariable Long id, @Valid @RequestBody TaskCreateRequest request) {
-        return ResponseEntity.ok(taskService.update(id, request));
+    public ResponseEntity<TaskResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody TaskCreateRequest request,
+            @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey
+    ) {
+        return idempotencyService.execute(
+                "tasks:update:" + id,
+                idempotencyKey,
+                request,
+                () -> ResponseEntity.ok(taskService.update(id, request))
+        );
     }
 
     @Operation(summary = "Delete task")
